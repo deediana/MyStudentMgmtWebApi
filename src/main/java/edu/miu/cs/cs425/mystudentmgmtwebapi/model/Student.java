@@ -1,13 +1,11 @@
 package edu.miu.cs.cs425.mystudentmgmtwebapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
+@AllArgsConstructor(staticName = "build")
 @Entity
 @Table(name = "students")
 public class Student {
@@ -29,7 +27,7 @@ public class Student {
     @JoinColumn(name="transcript_id", nullable = false)
     private Transcript transcript;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "classroom_id", nullable = true)
     private Classroom classroom;
 
@@ -43,20 +41,13 @@ public class Student {
     public Student() {
     }
 
-    public Student (Long studentId,String name,Transcript transcript){
-        this.studentId = studentId;
-        this.name = name;
-        this.transcript = transcript;
-    }
-
-    public Student(Long studentId, Long studentNumber, String name, Float cgpa, LocalDate admissionDate, Transcript transcript ){
+    public Student(Long studentId, Long studentNumber, String name, Float cgpa, LocalDate admissionDate, Transcript transcript) {
         this.studentId = studentId;
         this.studentNumber = studentNumber;
         this.name = name;
         this.cgpa = cgpa;
         this.admissionDate = admissionDate;
         this.transcript = transcript;
-
     }
 
     public Student(Long studentNumber, String name, Float cgpa, LocalDate admissionDate, Transcript transcript) {
@@ -65,25 +56,6 @@ public class Student {
         this.cgpa = cgpa;
         this.admissionDate = admissionDate;
         this.transcript = transcript;
-    }
-
-    public Student(Long studentNumber, String name, Float cgpa, LocalDate admissionDate, Transcript transcript, Classroom cr) {
-        this.studentNumber = studentNumber;
-        this.name = name;
-        this.cgpa = cgpa;
-        this.admissionDate = admissionDate;
-        this.transcript = transcript;
-        this.classroom = cr;
-    }
-
-    public Student(Long studentId, Long studentNumber, String name, Float cgpa, LocalDate admissionDate, Transcript transcript, Classroom cr) {
-        this.studentId = studentId;
-        this.studentNumber = studentNumber;
-        this.name = name;
-        this.cgpa = cgpa;
-        this.admissionDate = admissionDate;
-        this.transcript = transcript;
-        this.classroom = cr;
     }
 
     public Long getStudentId() {
@@ -154,4 +126,6 @@ public class Student {
                 ", " + classroom +
                 '}';
     }
+
+
 }

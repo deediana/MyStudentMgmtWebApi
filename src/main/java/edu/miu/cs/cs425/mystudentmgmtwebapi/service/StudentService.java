@@ -18,8 +18,7 @@ public interface StudentService {
     //Student save(Student s);
     List<Student> getPassingStudentsOnly();
     List<Student> getLatestStudents();
-    Student updateStudent(Student updatedStudent);
-    //void updateStudent(Classroom classroom, long studentId);
+    Student updateStudent(StudentRequest editedStudentRequest, Long studentId);
 
     void deleteStudentById(Long studentId);
 }

@@ -17,17 +17,20 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
+    //@Autowired
     private StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository){
+
         this.studentRepository = studentRepository;
     }
 
     @Override
     public Student addNewStudent(StudentRequest studentRequest) {
-        var newStudent= Student.build(0, studentRequest.getStudentNumber(), studentRequest.getName(), studentRequest.getCgpa(), studentRequest.getAdmissionDate(), studentRequest.getTranscript());
-        return newStudent;
+        var newStudent= Student.build(null, studentRequest.getStudentNumber(),
+                studentRequest.getName(), studentRequest.getCgpa(),studentRequest.getAdmissionDate(),studentRequest.getTranscript(),
+                studentRequest.getClassroom(),studentRequest.getCourses());
+        return studentRepository.save(newStudent);
     }
 
 
@@ -54,9 +57,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Student updatedStudent) {
-        return studentRepository.save(updatedStudent);
+    public Student updateStudent(StudentRequest updatedStudentReq,Long studentId) {
+        Student editedStudent = Student.build(studentId, updatedStudentReq.getStudentNumber(), updatedStudentReq.getName(), updatedStudentReq.getCgpa(), updatedStudentReq.getAdmissionDate()
+                ,updatedStudentReq.getTranscript(),updatedStudentReq.getClassroom(),updatedStudentReq.getCourses());
+        return studentRepository.save(editedStudent);
     }
+
 
     @Override
     public void deleteStudentById(Long studentId) {
