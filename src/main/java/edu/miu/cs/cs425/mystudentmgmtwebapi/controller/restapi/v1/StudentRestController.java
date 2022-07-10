@@ -44,7 +44,7 @@ public class StudentRestController {
     }
 
     @DeleteMapping(value={"/delete/{studentId}"})
-    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> deleteStudent(@PathVariable Long studentId){
+    public ResponseEntity.BodyBuilder deleteStudent(@PathVariable Long studentId){
         studentService.deleteStudentById(studentId);
         return ResponseEntity.status(HttpStatus.OK);
     }
